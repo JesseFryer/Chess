@@ -16,6 +16,8 @@ public class App extends JFrame implements ActionListener {
 
     private ArrayList<Tile> tiles;
 
+    private Tile selectedTile;
+
     private JButton newGame;
 
     private ArrayList<ImageIcon> whitePieceImages;
@@ -44,6 +46,7 @@ public class App extends JFrame implements ActionListener {
         for (int row = 1; row < 9; row++) {
             for (int column = 1; column < 9; column++) {
                 Tile tile = new Tile(row, column);
+                tile.addActionListener(this);
                 // set colours of squares
                 if (row % 2 == 0) {
                     if (column % 2 == 0) {
@@ -74,23 +77,40 @@ public class App extends JFrame implements ActionListener {
     }
 
     private void newGame() {
+        selectedTile = null;
         for (Tile tile : tiles) {
-            if (tile.row == 2 || tile.row == 7) tile.setPiece(Piece.PAWN);
-            else if (tile.row == 1 || tile.row == 8) {
+            // set black or white piece
+            if (tile.row == 1 || tile.row == 2) tile.setColour(Constants.BLACK);
+            else if (tile.row == 7 || tile.row == 8) tile.setColour(Constants.WHITE);
+            else tile.setColour(Piece.EMPTY);
+
+            // set piece
+            if (tile.row == 1 || tile.row == 8) {
                 if (tile.column == 1 || tile.column == 8) tile.setPiece(Piece.ROOK);
-                if (tile.column == 2 || tile.column == 7) tile.setPiece(Piece.KNIGHT);
-                if (tile.column == 3 || tile.column == 6) tile.setPiece(Piece.BISHOP);
-                if (tile.column == 4) tile.setPiece(Piece.QUEEN);
-                if (tile.column == 5) tile.setPiece(Piece.KING);
-            } else tile.setPiece(Piece.EMPTY);
+                else if (tile.column == 2 || tile.column == 7) tile.setPiece(Piece.KNIGHT);
+                else if (tile.column == 3 || tile.column == 6) tile.setPiece(Piece.BISHOP);
+                else if (tile.column == 4) tile.setPiece(Piece.QUEEN);
+                else tile.setPiece(Piece.KING);
+            }
+            else if (tile.row == 2 || tile.row == 7) tile.setPiece(Piece.PAWN);
+            else tile.setPiece(Piece.EMPTY);
         }
         updateImages();
     }
 
     private void updateImages() {
         for (Tile tile : tiles) {
-            if (tile.getPiece() != Piece.EMPTY) tile.setIcon(whitePieceImages.get(tile.getPiece()));
-        }
+            switch (tile.getColour()) {
+                case Constants.WHITE:
+                    tile.setIcon(whitePieceImages.get(tile.getPiece()));
+                    break;
+                case Constants.BLACK:
+                    tile.setIcon(blackPieceImages.get(tile.getPiece()));
+                    break;
+                default:
+                    tile.setIcon(null);
+                }
+            }
         revalidate();
     }
 
@@ -101,7 +121,7 @@ public class App extends JFrame implements ActionListener {
             BufferedImage spriteSheet = ImageIO.read(is);
             for (int x = 0; x < 96; x += 16) {
                 ImageIcon img = new ImageIcon(spriteSheet.getSubimage(x, 0, 16,16));
-                Image scaledImg = img.getImage().getScaledInstance(50,50, Image.SCALE_DEFAULT);
+                Image scaledImg = img.getImage().getScaledInstance(60,60, Image.SCALE_DEFAULT);
                 imageIcons.add(new ImageIcon(scaledImg));
             }
         } catch (IOException e) {
@@ -116,8 +136,24 @@ public class App extends JFrame implements ActionListener {
         return imageIcons;
     }
 
+    private void movePiece(Tile tileToMove, Tile tileTo) {
+        if (tileTo.getColour() != tileToMove.getColour() && tileToMove.getPiece() != Piece.EMPTY) {
+            tileTo.setPiece(tileToMove.getPiece());
+            tileTo.setColour(tileToMove.getColour());
+            tileToMove.clear();
+            updateImages();
+            revalidate();
+        }
+        selectedTile = null;
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == newGame) newGame();
+        else if (e.getSource().getClass() == Tile.class) {
+            if (selectedTile != null) {
+                movePiece(selectedTile, (Tile) e.getSource());
+            } else selectedTile = (Tile) e.getSource();
+        }
     }
 }

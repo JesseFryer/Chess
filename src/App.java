@@ -17,6 +17,7 @@ public class App extends JFrame implements ActionListener {
     private ArrayList<Tile> tiles;
 
     private Tile selectedTile;
+    private ArrayList<Tile> updatedTiles;
 
     private JButton newGame;
 
@@ -95,11 +96,13 @@ public class App extends JFrame implements ActionListener {
             else if (tile.row == 2 || tile.row == 7) tile.setPiece(Piece.PAWN);
             else tile.setPiece(Piece.EMPTY);
         }
+        updatedTiles = new ArrayList<>(tiles);
         updateImages();
     }
 
     private void updateImages() {
-        for (Tile tile : tiles) {
+        System.out.println(updatedTiles.size());
+        for (Tile tile : updatedTiles) {
             switch (tile.getColour()) {
                 case Constants.WHITE:
                     tile.setIcon(whitePieceImages.get(tile.getPiece()));
@@ -111,6 +114,7 @@ public class App extends JFrame implements ActionListener {
                     tile.setIcon(null);
                 }
             }
+        updatedTiles.clear();
         revalidate();
     }
 
@@ -141,10 +145,11 @@ public class App extends JFrame implements ActionListener {
             tileTo.setPiece(tileToMove.getPiece());
             tileTo.setColour(tileToMove.getColour());
             tileToMove.clear();
+            updatedTiles.add(tileToMove);
+            updatedTiles.add(tileTo);
             updateImages();
-            revalidate();
-        }
-        selectedTile = null;
+        } else if (tileTo.getPiece() != Piece.EMPTY) selectedTile = tileTo;
+        else selectedTile = null;
     }
 
     @Override
@@ -153,7 +158,10 @@ public class App extends JFrame implements ActionListener {
         else if (e.getSource().getClass() == Tile.class) {
             if (selectedTile != null) {
                 movePiece(selectedTile, (Tile) e.getSource());
-            } else selectedTile = (Tile) e.getSource();
+            } else {
+                Tile tile = (Tile) e.getSource();
+                if (tile.getPiece() != Piece.EMPTY) selectedTile = tile;
+            }
         }
     }
 }

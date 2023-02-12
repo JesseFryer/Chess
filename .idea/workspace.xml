@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="fc5131a5-ee93-419c-83fa-61aca10cf2c5" name="Changes" comment="Added ability move pieces, new game function image update &#10;&#10;- fine-tuned image update to show both white and black&#10;- added moving functionality (no rules yet)&#10;- new game function now works properly">
+    <list default="true" id="fc5131a5-ee93-419c-83fa-61aca10cf2c5" name="Changes" comment="Optimized image update&#10;&#10;- now only update the image of the tiles affected by a move instead of all 64 tiles.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Tile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Tile.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,12 +33,12 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/assets" />
@@ -87,7 +88,14 @@
       <option name="project" value="LOCAL" />
       <updated>1675723901805</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Optimized image update&#10;&#10;- now only update the image of the tiles affected by a move instead of all 64 tiles.">
+      <created>1675727126722</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1675727126722</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -106,6 +114,7 @@
     <MESSAGE value="In the App class&#10;- main window (JFrame)&#10;- chessboard panel and menu panel (JPanel)&#10;- chess board filled with Tiles&#10;&#10;Tile class&#10;- the Tile class (will have more functionality later), is currently just a coloured button with row and column fields" />
     <MESSAGE value="piece images, new game button &#10;- added newGame function to button (sets the piece field in each Tile then updates its imageIcon.&#10;- added Piece class to hold static int values for each piece type" />
     <MESSAGE value="Added ability move pieces, new game function image update &#10;&#10;- fine-tuned image update to show both white and black&#10;- added moving functionality (no rules yet)&#10;- new game function now works properly" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added ability move pieces, new game function image update &#10;&#10;- fine-tuned image update to show both white and black&#10;- added moving functionality (no rules yet)&#10;- new game function now works properly" />
+    <MESSAGE value="Optimized image update&#10;&#10;- now only update the image of the tiles affected by a move instead of all 64 tiles." />
+    <option name="LAST_COMMIT_MESSAGE" value="Optimized image update&#10;&#10;- now only update the image of the tiles affected by a move instead of all 64 tiles." />
   </component>
 </project>

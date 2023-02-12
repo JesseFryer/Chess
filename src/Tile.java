@@ -37,4 +37,9 @@ public class Tile extends JButton {
         piece = Piece.EMPTY;
         colour = Piece.EMPTY;
     }
+
+    public boolean isPiece() {
+        if (piece != Piece.EMPTY) return true;
+        return false;
+    }
 }
